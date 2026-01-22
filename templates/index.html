@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Cajero Automático Pro</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="atm-container">
+        <h1>BANK-O-MAT</h1>
+        <div id="screen">
+            <p id="message">Bienvenido. Ingrese sus credenciales.</p>
+            <input type="number" id="user_id" placeholder="ID de Cuenta">
+            <input type="password" id="pin" placeholder="PIN">
+            <input type="number" id="monto" placeholder="Monto">
+        </div>
+        <div class="buttons">
+            <button onclick="operacion('retirar')">RETIRAR</button>
+        </div>
+    </div>
+
+    <script>
+        async function operacion(accion) {
+            const data = {
+                id: document.getElementById('user_id').value,
+                pin: document.getElementById('pin').value,
+                monto: document.getElementById('monto').value,
+                accion: accion
+            };
+            const response = await fetch('/operacion', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(data)
+            });
+            const res = await response.json();
+            document.getElementById('message').innerText = res.msg + (res.nuevo_saldo ? " Saldo: $" + res.nuevo_saldo : "");
+        }
+    </script>
+</body>
+</html>
