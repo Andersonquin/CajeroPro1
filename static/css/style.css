@@ -3,7 +3,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
     margin: 0;
     font-family: 'Courier New', Courier, monospace;
 }
@@ -12,61 +12,112 @@ body {
 .atm-container {
     background: #1a1a1a;
     padding: 25px;
-    border-radius: 5px;
+    border-radius: 10px;
     border: 3px solid #333;
-    box-shadow: 0 0 20px rgba(0,0,0,0.5);
-    width: 380px;
+    box-shadow: 0 0 30px rgba(0,0,0,0.8);
+    width: 90%;
+    max-width: 500px;
 }
 
-/* La pantalla: Verde oscuro de fondo, texto verde neón suave */
+/* La pantalla: Estilo terminal neón */
 #screen {
-    background: #001500;
+    background: #001000;
     border: 2px solid #003300;
     padding: 20px;
-    margin-bottom: 20px;
     border-radius: 5px;
-    box-shadow: inset 0 0 15px #000;
-    color: #33ff33; /* Un verde más equilibrado */
-    text-shadow: 0 0 5px rgba(51, 255, 51, 0.5);
+    box-shadow: inset 0 0 20px #000;
+    color: #33ff33;
+    text-shadow: 0 0 5px rgba(51, 255, 51, 0.4);
+}
+
+.hidden {
+    display: none !important;
 }
 
 #message {
-    font-weight: bold;
+    font-size: 0.9rem;
+    color: #33ff33;
     margin-bottom: 15px;
-    min-height: 40px;
+    text-align: center;
 }
 
-/* Inputs: Ahora son más legibles */
+/* Inputs: Estilo Terminal */
 input {
     background: #000;
     border: 1px solid #005500;
     color: #33ff33;
-    padding: 12px;
+    padding: 10px;
     margin: 8px 0;
-    width: 90%;
-    font-size: 1.1rem;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 1rem;
     text-align: center;
+    font-family: 'Courier New', monospace;
 }
 
 input:focus {
     border-color: #33ff33;
     outline: none;
+    box-shadow: 0 0 5px #33ff33;
 }
 
-/* Botón: Estilo industrial */
+/* Botones */
 button {
-    background: #004400;
+    background: #002200;
     color: #33ff33;
-    border: 2px solid #33ff33;
-    padding: 15px;
+    border: 1px solid #33ff33;
+    padding: 12px;
     width: 100%;
     font-weight: bold;
     cursor: pointer;
     text-transform: uppercase;
-    transition: 0.3s;
+    transition: all 0.2s;
+    margin-top: 5px;
 }
 
 button:hover {
     background: #33ff33;
     color: #000;
+}
+
+/* Tablas de Historial */
+table {
+    width: 100%;
+    margin-top: 10px;
+    border-collapse: collapse;
+    font-size: 0.75rem;
+}
+
+th {
+    border-bottom: 1px solid #33ff33;
+    padding: 8px;
+    text-align: left;
+}
+
+td {
+    padding: 8px;
+    border-bottom: 1px solid #002200;
+}
+
+#balance-display {
+    font-size: 2.2rem;
+    font-weight: bold;
+    margin: 10px 0;
+    color: #33ff33;
+}
+
+/* Colores de transacciones */
+.text-danger { color: #ff3333 !important; }
+.text-success { color: #33ff33 !important; }
+
+/* Scrollbar estilo terminal para el historial */
+table tbody {
+    display: block;
+    max-height: 200px;
+    overflow-y: auto;
+}
+table thead, table tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
 }

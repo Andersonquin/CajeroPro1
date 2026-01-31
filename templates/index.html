@@ -2,39 +2,65 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Cajero Automático Pro</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cajero Automático Pro - Terminal</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-    <div class="atm-container">
-        <h1>BANK-O-MAT</h1>
-        <div id="screen">
-            <p id="message">Bienvenido. Ingrese sus credenciales.</p>
-            <input type="number" id="user_id" placeholder="ID de Cuenta">
-            <input type="password" id="pin" placeholder="PIN">
-            <input type="number" id="monto" placeholder="Monto">
+
+<div class="atm-container">
+    <div id="screen">
+        <div id="login-section">
+            <h2 style="text-align: center;">🏦 CAJERO CENTRAL</h2>
+            <div id="message">POR FAVOR INGRESE SUS CREDENCIALES</div>
+            <input type="number" id="login-id" placeholder="ID DE CUENTA">
+            <input type="password" id="login-pin" placeholder="PIN SEGURIDAD">
+            <button onclick="login()">ACCEDER AL SISTEMA</button>
         </div>
-        <div class="buttons">
-            <button onclick="operacion('retirar')">RETIRAR</button>
+
+        <div id="dashboard-section" class="hidden">
+            <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #005500; margin-bottom: 15px;">
+                <span id="welcome-msg">BIENVENIDO</span>
+                <span style="cursor:pointer; color: #ff3333;" onclick="logout()">[SALIR]</span>
+            </div>
+
+            <div style="text-align: center; margin-bottom: 20px;">
+                <small>SALDO DISPONIBLE</small>
+                <div id="balance-display">$0.00</div>
+            </div>
+
+            <div class="ops-grid">
+                <input type="number" id="monto" placeholder="MONTO $">
+                <div style="display: flex; gap: 5px;">
+                    <button onclick="operacion('depositar')">DEPOSITAR</button>
+                    <button onclick="operacion('retirar')">RETIRAR</button>
+                </div>
+                
+                <div style="margin-top: 15px; border-top: 1px solid #005500; padding-top: 10px;">
+                    <input type="number" id="id_destino" placeholder="ID CUENTA DESTINO">
+                    <button onclick="operacion('transferir')" style="border-color: #33ccff; color: #33ccff;">TRANSFERIR</button>
+                </div>
+            </div>
+
+            <div style="margin-top: 20px;">
+                <h5 style="border-bottom: 1px solid #33ff33;">HISTORIAL DE MOVIMIENTOS</h5>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>FECHA</th>
+                            <th>TIPO</th>
+                            <th>MONTO</th>
+                        </tr>
+                    </thead>
+                    <tbody id="historial-tabla">
+                        </tbody>
+                </table>
+            </div>
         </div>
     </div>
+</div>
 
-    <script>
-        async function operacion(accion) {
-            const data = {
-                id: document.getElementById('user_id').value,
-                pin: document.getElementById('pin').value,
-                monto: document.getElementById('monto').value,
-                accion: accion
-            };
-            const response = await fetch('/operacion', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify(data)
-            });
-            const res = await response.json();
-            document.getElementById('message').innerText = res.msg + (res.nuevo_saldo ? " Saldo: $" + res.nuevo_saldo : "");
-        }
-    </script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>
 </html>
